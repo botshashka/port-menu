@@ -135,10 +135,6 @@ struct PortHeaderView: View {
                         Toggle("Launch at Login", isOn: launchAtLogin)
                             .toggleStyle(.switch)
                             .controlSize(.mini)
-
-                        Divider()
-
-                        CheckForUpdatesView(updater: updater)
                     }
                     .padding(12)
                 }

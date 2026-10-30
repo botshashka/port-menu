@@ -14,8 +14,10 @@ struct PorterApp: App {
     private let updaterDelegate = UpdaterDelegate()
 
     init() {
+        // Fork: never start Sparkle. The feed points at upstream releases, which
+        // would replace this build.
         updaterController = SPUStandardUpdaterController(
-            startingUpdater: true,
+            startingUpdater: false,
             updaterDelegate: updaterDelegate,
             userDriverDelegate: nil
         )
@@ -39,11 +41,6 @@ struct PorterApp: App {
             .onAppear { store.ensurePolling() }
         }
         .menuBarExtraStyle(.window)
-        .commands {
-            CommandGroup(after: .appInfo) {
-                CheckForUpdatesView(updater: updaterController.updater)
-            }
-        }
     }
 
     private var statusColor: Color {

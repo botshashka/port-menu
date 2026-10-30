@@ -6,6 +6,13 @@ A tiny macOS menu bar app that tracks your dev servers across projects.
 
 No config. No setup. It just works.
 
+> **About this fork.** A personal build of [wieandteduard/port-menu](https://github.com/wieandteduard/port-menu) with two changes:
+>
+> - Dev runtimes that macOS launched with cwd `/` aren't listed, so "Kill all" no longer stops apps like Raycast that bundle `node` (branch `fix/skip-runtimes-launched-by-macos`).
+> - Sparkle auto-update is off, because the feed points at upstream releases, which would replace this build. To pick up upstream changes, merge `upstream/main` and rebuild.
+>
+> Build and install (signed for this Mac only; hardened runtime is off because it rejects the self-signed Sparkle framework): `xcodebuild -project Porter.xcodeproj -scheme Porter -configuration Release -derivedDataPath build/DerivedData CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= CODE_SIGN_STYLE=Manual ENABLE_HARDENED_RUNTIME=NO build`, then copy `build/DerivedData/Build/Products/Release/Port Menu.app` to `/Applications`.
+
 ---
 
 ## What it does
