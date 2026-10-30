@@ -333,6 +333,20 @@ struct FallbackFilterTests {
         ))
     }
 
+    @Test func rejectsBundledRuntimeLaunchedByMacOS() {
+        #expect(!LivePortScanner.shouldKeepFallbackProcess(
+            processName: "node",
+            cwd: "/"
+        ))
+    }
+
+    @Test func keepsRuntimeWithUnknownCwd() {
+        #expect(LivePortScanner.shouldKeepFallbackProcess(
+            processName: "node",
+            cwd: nil
+        ))
+    }
+
     @Test func rejectsDesktopAppWithoutGitRoot() {
         #expect(!LivePortScanner.shouldKeepFallbackProcess(
             processName: "Spotify",

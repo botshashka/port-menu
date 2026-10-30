@@ -268,11 +268,18 @@ struct LivePortScanner: PortScanning {
 
     static func shouldKeepFallbackProcess(processName: String, cwd: String?) -> Bool {
         let normalized = processName.lowercased()
-        if allowedFallbackProcessNames.contains(normalized) {
+        if isDockerProcess(normalized) {
             return true
         }
 
-        if isDockerProcess(normalized) {
+        // Apps launched by macOS run with cwd "/", including ones that bundle a
+        // dev runtime (Raycast's backend is `node`). A dev server started from a
+        // shell runs in a real directory, so don't treat these as dev servers.
+        if cwd == "/" {
+            return false
+        }
+
+        if allowedFallbackProcessNames.contains(normalized) {
             return true
         }
 
